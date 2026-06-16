@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Threading;
 using Microsoft.Extensions.Diagnostics.Metrics.Testing;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -128,6 +129,7 @@ public class ComponentsMetricsTest
 
         // Act
         var startTimestamp = Stopwatch.GetTimestamp();
+        Thread.Sleep(10); // Small delay to ensure measurable duration
         componentsMetrics.FailEventSync(exception, startTimestamp,
             "TestComponent", "OnClick", "onclick");
 
@@ -212,6 +214,7 @@ public class ComponentsMetricsTest
 
         // Act
         var startTimestamp = Stopwatch.GetTimestamp();
+        Thread.Sleep(10); // Small delay to ensure measurable duration
         componentsMetrics.FailParametersSync(exception, startTimestamp, "TestComponent");
 
         // Assert
@@ -291,6 +294,7 @@ public class ComponentsMetricsTest
 
         // Act
         var startTimestamp = Stopwatch.GetTimestamp();
+        Thread.Sleep(10); // Small delay to ensure measurable duration
         componentsMetrics.FailBatchSync(exception, startTimestamp);
 
         // Assert
