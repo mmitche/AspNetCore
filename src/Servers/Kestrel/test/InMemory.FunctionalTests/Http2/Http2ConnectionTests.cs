@@ -424,8 +424,11 @@ public class Http2ConnectionTests : Http2TestBase
 
         await WaitForAllStreamsAsync().DefaultTimeout();
 
-        // TriggerTick will trigger the stream to be returned to the pool so we can assert it
+        var streamPooled = WaitForLogMessage(m => m.EventId.Name == "Http2StreamPooled").DefaultTimeout();
+
+        // TriggerTick will trigger the stream to be returned to the pool.
         TriggerTick();
+        await streamPooled;
 
         // Stream has been returned to the pool
         Assert.Equal(1, _connection.StreamPool.Count);
@@ -528,8 +531,11 @@ public class Http2ConnectionTests : Http2TestBase
 
         await WaitForAllStreamsAsync().DefaultTimeout();
 
-        // TriggerTick will trigger the stream to be returned to the pool so we can assert it
+        var streamPooled = WaitForLogMessage(m => m.EventId.Name == "Http2StreamPooled").DefaultTimeout();
+
+        // TriggerTick will trigger the stream to be returned to the pool.
         TriggerTick();
+        await streamPooled;
 
         // Stream has been returned to the pool
         Assert.Equal(1, _connection.StreamPool.Count);
@@ -557,8 +563,11 @@ public class Http2ConnectionTests : Http2TestBase
 
         await WaitForAllStreamsAsync().DefaultTimeout();
 
-        // TriggerTick will trigger the stream to be returned to the pool so we can assert it
+        streamPooled = WaitForLogMessage(m => m.EventId.Name == "Http2StreamPooled").DefaultTimeout();
+
+        // TriggerTick will trigger the stream to be returned to the pool.
         TriggerTick();
+        await streamPooled;
 
         // Stream was reused and returned to the pool
         Assert.Equal(1, _connection.StreamPool.Count);
